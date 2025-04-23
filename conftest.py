@@ -30,4 +30,16 @@ def get_data(request):
         retrieved_contexts=[doc["text"] for doc in referenced_docs],
         # reference=test_data["reference"]
     )
-    return sample
+    return {
+        "sample": sample,
+        "question": test_data["message"],
+        "contexts": [doc["text"] for doc in referenced_docs]
+    }
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+    if hasattr(item, "_extra"):
+        rep.extra = getattr(item, "_extra")
