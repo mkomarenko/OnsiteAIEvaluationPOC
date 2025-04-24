@@ -15,7 +15,7 @@ async def test_all_metrics(llm_wrapper, get_data):
                ResponseRelevancy(llm=llm_wrapper)
                ]
 
-    eval_dataset = EvaluationDataset([get_data])
+    eval_dataset = EvaluationDataset([get_data["sample"]])
     results = evaluate(dataset=eval_dataset, metrics=metrics)
     print(results)
     # results.upload()

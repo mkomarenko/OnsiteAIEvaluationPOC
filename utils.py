@@ -29,9 +29,10 @@ def get_llm_response(test_data):
     return response_dict
 
 
-def attach_to_html_report(question, contexts, score, request):
+def attach_to_html_report(question, contexts, message, score, request):
     extra = getattr(request.node, "_extra", [])
     extra.append(pytest_html.extras.text(f"Prompt: {question}", name="Prompt"))
     extra.append(pytest_html.extras.text(f"Context: {contexts}", name="Context"))
+    extra.append(pytest_html.extras.text(f"Message: {message}", name="Message"))
     extra.append(pytest_html.extras.text(f"Score: {score}", name="RAGAS Score"))
     request.node._extra = extra

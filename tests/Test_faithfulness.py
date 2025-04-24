@@ -16,9 +16,10 @@ async def test_faithfulness(llm_wrapper, get_data, request):
 
     print(f"\nPrompt: {get_data['question']}")
     print(f"Context: {get_data['contexts']}")
+    print(f"Message: {get_data['message']}")
     print(f"Score: {score}")
 
     # Attach to HTML report
-    attach_to_html_report(get_data['question'], get_data['contexts'], score, request)
+    attach_to_html_report(get_data['question'], get_data['contexts'], get_data['message'], score, request)
 
     assert score > 0.85

@@ -33,7 +33,8 @@ def get_data(request):
     return {
         "sample": sample,
         "question": test_data["message"],
-        "contexts": [doc["text"] for doc in referenced_docs]
+        "contexts": [doc["text"] for doc in referenced_docs],
+        "message": response_dict["message"],
     }
 
 
