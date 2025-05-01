@@ -11,7 +11,7 @@ load_dotenv()  # Load environment variables from .env file
 
 @pytest.fixture
 def llm_wrapper():
-    llm = ChatOpenAI(model="gpt-4.1", temperature=0)
+    llm = ChatOpenAI(model="gpt-4-turbo-2024-04-09", temperature=0)
     lang_chain_llm = LangchainLLMWrapper(llm)
     return lang_chain_llm
 
@@ -21,20 +21,19 @@ def get_data(request):
     test_data = request.param
     response_dict = get_llm_response(test_data)
     referenced_docs = response_dict.get("intermediate_steps")[0][0][3]["referenced_docs"]
-    # print([referenced_docs[0]["text"]])
-    # print(response_dict["message"])
 
     sample = SingleTurnSample(
         user_input=test_data["message"],
         response=response_dict["message"],
         retrieved_contexts=[doc["text"] for doc in referenced_docs],
-        # reference=test_data["reference"]
+        reference=test_data["reference"]
     )
     return {
         "sample": sample,
         "question": test_data["message"],
         "contexts": [doc["text"] for doc in referenced_docs],
         "message": response_dict["message"],
+        "reference": test_data["reference"],
     }
 
 
